@@ -1,0 +1,70 @@
+Didnot put the data into JSON.stringify
+
+app.post("/api/v1/tours", (req, res) => {
+	const newId = tours[tours.length - 1].id + 1;
+	const newTour = Object.assign({ id: newId }, req.body);
+
+	tours.push(newTour);
+	fs.writeFile(`${__dirname}/dev-data/data/tours-simple.json`, ========> ({JSON.stringify)(tours)}, (err) => {
+		res.status(201).json({status: "success",
+			data: {
+				tour: newTour,
+			},
+		});
+	});
+
+	res.send("Done!");
+});
+
+
+TypeError [ERR_INVALID_ARG_TYPE]: The "data" argument must be of type string or an instance of Buffer, TypedArray, or DataView. Received an instance of Array
+    at Object.writeFile (node:fs:2106:5)
+    at /home/umair/Projects/Nodejs/jonas/practice/natours/app.js:33:5
+    at Layer.handle [as handle_request] (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/router/layer.js:95:5)
+    at /home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/router/index.js:280:10)
+    at /home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/body-parser/lib/read.js:137:5
+       
+
+
+when we send two responses
+
+app.post("/api/v1/tours", (req, res) => {
+	const newId = tours[tours.length - 1].id + 1;
+	const newTour = Object.assign({ id: newId }, req.body);
+
+	tours.push(newTour);
+	fs.writeFile(
+		`${__dirname}/dev-data/data/tours-simple.json`,
+		JSON.stringify(tours),
+		(err) => {
+			res.status(201).json({  <=====================
+				status: "success",
+				data: {
+					tour: newTour,
+				},
+			});
+		}
+	);
+	res.send("Done");  <=================
+});
+
+
+node:_http_outgoing:573
+    throw new ERR_HTTP_HEADERS_SENT('set');
+    ^
+
+Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    at new NodeError (node:internal/errors:371:5)
+    at ServerResponse.setHeader (node:_http_outgoing:573:11)
+    at ServerResponse.header (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/response.js:794:10)
+    at ServerResponse.send (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/response.js:174:12)
+    at ServerResponse.json (/home/umair/Projects/Nodejs/jonas/practice/natours/node_modules/express/lib/response.js:278:15)
+    at /home/umair/Projects/Nodejs/jonas/practice/natours/app.js:37:20
+    at FSReqCallback.oncomplete (node:fs:188:23) {
+  code: 'ERR_HTTP_HEADERS_SENT'
+}

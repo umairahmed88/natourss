@@ -1,0 +1,10 @@
+get => get all the tours.
+
+post => to create new tour.
+
+
+There are two methods to update data i.e, put and patch
+
+put => we expect that the application receives the entire updated object
+
+patch => only the property updated on the object.
