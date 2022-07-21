@@ -4,3 +4,5 @@
 
 400 =  failed
 404 = Not found (app.js 36, 71)
+
+500 = internal server error
