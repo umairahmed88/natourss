@@ -1,8 +1,8 @@
-200 = ok (app.js 19, 77)
-201 = created (app.js 58)
-204 = no content
+200 = ok (tourcontroller 19, 34, 62)
+201 = created (tourcontroller 51)
+204 = no content (tourcontroller 71)
 
 400 =  failed
-404 = Not found (app.js 36, 71)
+404 = Not found (tourcontroller 10, 71)
 
-500 = internal server error
+500 = internal server error (userController 2, 9, 16, 23, 29)
