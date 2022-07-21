@@ -25,6 +25,7 @@
 		"debug": "^2.6.9",
 		"depd": "^2.0.0",
 		"destroy": "^1.2.0",
+		"dotenv": "^16.0.1",
 		"ee-first": "^1.1.1",
 		"encodeurl": "^1.0.2",
 		"escape-html": "^1.0.3",
@@ -95,7 +96,8 @@
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "nodemon server.js"
+		"start:dev": "nodemon server.js",
+		"start:prod": "NODE_ENV=production nodemon server.js"
 	},
 	"repository": {
 		"type": "git",

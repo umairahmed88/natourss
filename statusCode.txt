@@ -3,6 +3,6 @@
 204 = no content (tourcontroller 71)
 
 400 =  failed
-404 = Not found (tourcontroller 10, 71)
+404 = Not found (tourcontroller 10)
 
 500 = internal server error (userController 2, 9, 16, 23, 29)
