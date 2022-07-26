@@ -84,6 +84,7 @@
 		"setprototypeof": "^1.2.0",
 		"side-channel": "^1.0.4",
 		"simple-update-notifier": "^1.0.7",
+		"slugify": "^1.6.5",
 		"statuses": "^2.0.1",
 		"supports-color": "^5.5.0",
 		"to-regex-range": "^5.0.1",

@@ -68,3 +68,80 @@ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the cli
     at FSReqCallback.oncomplete (node:fs:188:23) {
   code: 'ERR_HTTP_HEADERS_SENT'
 }
+
+
+
+
+					avgPrice: { $avg: "$price" },
+					mminPrice: { max: "$price" },  <============= I forgot $ with max correction $max
+
+{
+    "status": "fail",
+    "message": {
+        "ok": 0,
+        "code": 40234,
+        "codeName": "Location40234",
+        "$clusterTime": {
+            "clusterTime": "7124290587221557253",
+            "signature": {
+                "hash": "izIrwAk9y2RzWX/x+Id4tm0Tu2U=",
+                "keyId": "7057933587311493122"
+            }
+        },
+        "operationTime": "7124290587221557253",
+        "name": "MongoError"
+    }
+}
+
+
+
+entering the wrong field
+
+			{
+	=====>			$product: {   <===== write product instead of project
+					_id: 0,
+				},
+			},
+
+
+{
+    "status": "fail",
+    "message": {
+        "ok": 0,
+        "code": 8000,
+        "codeName": "AtlasError",
+        "name": "MongoError"
+    }
+}
+
+
+
+tourSchema.pre("find", function (next) {
+	this.find({ secretTour: { ne: true } });        <===== i didnot put $ with ne
+	next();
+});
+
+{
+    "status": "fail",
+    "message": {
+        "stringValue": "\"{ ne: true }\"",
+        "valueType": "Object",
+        "kind": "Boolean",
+        "value": {
+            "ne": true
+        },
+        "path": "secretTour",
+        "reason": {
+            "stringValue": "\"{ ne: true }\"",
+            "valueType": "Object",
+            "kind": "boolean",
+            "value": {
+                "ne": true
+            },
+            "name": "CastError",
+            "message": "Cast to boolean failed for value \"{ ne: true }\" (type Object) at path \"undefined\""
+        },
+        "name": "CastError",
+        "message": "Cast to Boolean failed for value \"{ ne: true }\" (type Object) at path \"secretTour\" for model \"Tour\""
+    }
+}
