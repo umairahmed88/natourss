@@ -9,10 +9,12 @@ put => we expect that the application receives the entire updated object
 
 patch => only the property updated on the object.
 
+app.all() => runs all http methods, including get(), post(), patch(), delete()
+
 
 Middlewares in Mongoose
 
 Document  => act on the currently processed document
 Query => allows us to run functions before or after a certain queery is executed
-Aggragate
+Aggregation => allow us to add hooks before and after aggregation is happened
 Model
