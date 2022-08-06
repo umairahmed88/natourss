@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
-const validator = require("validator");
+// const validator = require("validator");
+// const User = require("./userModel");
 
 const tourSchema = new mongoose.Schema(
 	{
@@ -76,6 +77,36 @@ const tourSchema = new mongoose.Schema(
 			type: Boolean,
 			default: false,
 		},
+		startLocation: {
+			// GeoJSON
+			type: {
+				type: String,
+				default: "Point",
+				enum: ["Point"],
+			},
+			coordinates: [Number],
+			address: String,
+			description: String,
+		},
+		locations: [
+			{
+				type: {
+					type: String,
+					default: "Point",
+					enum: ["Point"],
+				},
+				coordinates: [Number],
+				address: String,
+				description: String,
+				day: Number,
+			},
+		],
+		guides: [
+			{
+				type: mongoose.Schema.ObjectId,
+				ref: "User",
+			},
+		],
 	},
 	{
 		toJSON: { virtuals: true },
@@ -87,6 +118,13 @@ tourSchema.virtual("durationWeeks").get(function () {
 	return this.duration / 7;
 });
 
+// Virtual populate
+tourSchema.virtual("reviews", {
+	ref: "Review",
+	foreignField: "tour",
+	localField: "_id",
+});
+
 // Document Middleware, run before .save() .create()
 tourSchema.pre("save", function (next) {
 	this.slug = slugify(this.name, { lower: true });
@@ -94,25 +132,27 @@ tourSchema.pre("save", function (next) {
 	next();
 });
 
-// tourSchema.pre("save", function (next) {
-// 	console.log("We will save documents");
+// tourSchema.pre("save", async function () {
+// 	const guidesPromises = this.guides.map(async (id) => await User.findById(id));
+// 	this.guides = await Promise.all(guidesPromises);
 
 // 	next();
 // });
-
-// tourSchema.post("save", function (doc, next) {
-// 	console.log(doc);
-
-// 	next();
-// });
-
-// Query Middleware
 
 // /^find/ means include all the string start with find
 tourSchema.pre(/^find/, function (next) {
 	this.find({ secretTour: { $ne: true } });
 
 	this.start = Date.now();
+
+	next();
+});
+
+tourSchema.pre(/^find/, function (next) {
+	this.populate({
+		path: "guides",
+		select: "-__v -passwordChangedAt",
+	});
 
 	next();
 });
